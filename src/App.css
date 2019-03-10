@@ -41,3 +41,10 @@ div.input {
     transform: rotate(360deg);
   }
 }
+
+.box {
+  background-color: #cce4f7;
+  height: 50px;
+  width: 60px;
+  border-radius: 5px;
+}

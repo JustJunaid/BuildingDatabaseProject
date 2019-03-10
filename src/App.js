@@ -14,25 +14,38 @@ class App extends Component {
     units: [],
   }
 
+  invalidInput = ''
+
+  invalidMessageReset = () => {
+    const message = document.getElementById('message')
+    message.innerHTML = ''
+  }
+
   submitForm = (event) => {
     event.preventDefault()
     const unitsInString = event.target[2].value.split(',')
     const unitsInNumbers = unitsInString.map(i => i = parseInt(i))
     const floors = parseInt(event.target[1].value)
 
-    if (floors === unitsInNumbers.length) {
-      this.setState({
-        buildingNumber: parseInt(event.target[0].innerText.slice(16, 17)),
-        floors: floors,
-        units: unitsInNumbers
-      })
-    } else {
-      return
-    }
+    if (floors !== unitsInNumbers.length) {
+      const message = document.getElementById('message')
+      message.innerHTML = 'Invalid Input'
+    } 
+
+    this.setState({
+      buildingNumber: parseInt(event.target[0].innerText.slice(16, 17)),
+      floors: floors,
+      units: unitsInNumbers
+    })
   }
 
+  componentDidUpdate() {
+    setTimeout(this.invalidMessageReset, 1500)
+  }
 
   render() {
+    let flat = document.getElementById('flat')
+    if(flat) flat.innerHTML = '<div className="box"></div>'
     return (
       <div className='App'>
         <form action="" method="GET" onSubmit={this.submitForm}>
@@ -42,20 +55,22 @@ class App extends Component {
                 <div className="input">
                   <i className="pi pi-number">Total Number Of Floors: </i>
                   <div className="p-inputgroup">
-                    <InputText type="number" autoFocus={true} name="floors" placeholder="Enter Here.." required/>
+                    <InputText type="number" autoFocus={true} name="floors" placeholder="Enter Here.."/>
                   </div>
                 </div>
 
                 <div className="input">
                   <i className="pi pi-number">Units On Each Floor: </i>
                   <div className="p-inputgroup">
-                    <InputText name="units" placeholder="Enter Here.." required/>
+                    <InputText name="units" placeholder="Enter Here.."/>
                   </div>
                 </div>
 
                 <div className="input">
                   <Button type="submit" label="Submit" className="p-button-raised p-button-rounded" tooltip="Click to proceed" />
                 </div>
+
+                <div className="feature-intro"><h1 style={{fontWeight: '400'}} id="message"></h1></div>
 
                 {(this.state.floors === this.state.units.length) &&
                 (
@@ -75,7 +90,13 @@ class App extends Component {
                                     return (
                                       <tr>
                                         <td key={i}>{i+1}</td>
-                                        <td key={i+1}>{NoOfFlats}</td>
+                                        <td key={i+1}>
+                                          <div className="p-grid">
+                                            <div className="p-col">
+                                              <div id="flat">{'flat'.repeat(NoOfFlats)}</div>
+                                            </div>
+                                          </div>
+                                        </td>
                                       </tr>
                                     )
                                   })}
