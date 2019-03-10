@@ -1,5 +1,15 @@
 .App {
   text-align: center;
+  margin: 5% 20%;
+}
+
+div.p-inputgroup {
+  display: inline;
+  margin-left: 2%;
+}
+
+div.input {
+  margin: 5%;
 }
 
 .App-logo {
