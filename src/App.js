@@ -24,11 +24,13 @@ class App extends Component {
 
   submitForm = (event) => {
     event.preventDefault()
-    const unitsInString = event.target[2].value.split(',')
+    const unitsInput = event.target[2].value
+    const unitsInString = unitsInput.split(',')
     const unitsInNumbers = unitsInString.map(i => i = parseInt(i))
     const floors = parseInt(event.target[1].value)
+    console.log(event.target[2].value[event.target[2].value.length - 1])
 
-    if (floors !== unitsInNumbers.length && unitsInNumbers[unitsInNumbers.length - 1] !== ',') {
+    if (floors !== unitsInNumbers.length || unitsInput[unitsInput.length - 1] === ',') {
       const message = document.getElementById('message')
       message.innerHTML = 'Invalid Input'
     } 
