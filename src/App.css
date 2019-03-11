@@ -42,9 +42,13 @@ div.input {
   }
 }
 
+
+
 .box {
   background-color: #cce4f7;
   height: 50px;
   width: 60px;
   border-radius: 5px;
+  display: inline-block;
+  margin: 0 5px;
 }

@@ -6,15 +6,16 @@ import 'primeicons/primeicons.css';
 import { Fieldset } from 'primereact/fieldset';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
+var _ = require('lodash');
 
 class App extends Component {
+  invalidInput = ''
+
   state = {
     buildingNumber: parseInt(0),
     floors: '',
     units: [],
   }
-
-  invalidInput = ''
 
   invalidMessageReset = () => {
     const message = document.getElementById('message')
@@ -27,7 +28,7 @@ class App extends Component {
     const unitsInNumbers = unitsInString.map(i => i = parseInt(i))
     const floors = parseInt(event.target[1].value)
 
-    if (floors !== unitsInNumbers.length) {
+    if (floors !== unitsInNumbers.length && unitsInNumbers[unitsInNumbers.length - 1] !== ',') {
       const message = document.getElementById('message')
       message.innerHTML = 'Invalid Input'
     } 
@@ -69,6 +70,7 @@ class App extends Component {
                 <div className="input">
                   <Button type="submit" label="Submit" className="p-button-raised p-button-rounded" tooltip="Click to proceed" />
                 </div>
+                {this.renderSquare}
 
                 <div className="feature-intro"><h1 style={{fontWeight: '400'}} id="message"></h1></div>
 
@@ -92,8 +94,8 @@ class App extends Component {
                                         <td key={i}>{i+1}</td>
                                         <td key={i+1}>
                                           <div className="p-grid">
-                                            <div className="p-col">
-                                              <div id="flat">{'flat'.repeat(NoOfFlats)}</div>
+                                            <div className="p-col" style={{float: 'left'}}>
+                                            {_.times(NoOfFlats, () => (<div className="box"><p style={{color: '#333333', marginTop: '15px'}}>F. No.</p></div>))}
                                             </div>
                                           </div>
                                         </td>
